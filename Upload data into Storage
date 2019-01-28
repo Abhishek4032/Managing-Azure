@@ -1,0 +1,31 @@
+Login-AzureRmAccount
+
+New-AzureRmResourceGroup -Name ABRECR -Location "southeast asia"
+
+
+New-AzureRmStorageAccount -ResourceGroupName -ABRECR -Location "southeast asia" -skuName Standard_LRS -Name "ABSTO"
+
+
+Get-AzureRMStorageAccountNameAvailability -Name ABSTO 
+
+
+New-AzureRmStorageAccountKey -ResourceGroupNAme ABRECR -Name ABSTO 
+
+Type key1 to verify only
+
+
+$key1 = (Get-AzureRmStorageAccountKey -ResourceGroupNAme ABRECR -Name ABSTO).value
+
+$key1 to check only
+
+
+New-AzureStorageContext -StorageAccountName ABSTO -StorageAccountKey $key1.GetValue(0)
+
+$context = New-AzureStorageContext -StorageAccountName ABSTO -StorageAccountKey $key1.GetValue(0)
+
+$context to check connection string
+
+New-AzureStorageContainer -Name ABCON -Permision off -Context $context
+
+Set-AzureStorageBlobContent -File "C:\user\kiran\desktop\Capture.JPG" -Container ABCON -Context $context
+
